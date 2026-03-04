@@ -15,7 +15,7 @@ import java.util.List;
 public interface DomainEventPublisher {
 
     /** Publica un único evento */
-    void publish(StateTransitionOccurredEvent evento);
+    void publish(DomainEvent evento);
 
     /** Publica todos los eventos generados por un Aggregate Root en una operación */
     default void publishAll(List<DomainEvent> eventos) {
