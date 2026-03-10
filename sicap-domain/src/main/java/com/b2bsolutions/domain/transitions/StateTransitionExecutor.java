@@ -1,11 +1,11 @@
 package com.b2bsolutions.domain.transitions;
 
 import com.b2bsolutions.domain.state.State;
-import com.b2bsolutions.domain.transitions.event.DomainEventPublisher;
 import com.b2bsolutions.domain.transitions.event.StateTransitionOccurredEvent;
+import com.b2bsolutions.domain.transitions.events.DomainEventPublisher;
 
 import java.time.Instant;
-import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 public final class StateTransitionExecutor {
@@ -15,8 +15,8 @@ public final class StateTransitionExecutor {
 
     public StateTransitionExecutor(StateTransitionService transitionService,
                                    DomainEventPublisher eventPublisher) {
-        this.transitionService = transitionService;
-        this.eventPublisher = eventPublisher;
+        this.transitionService = Objects.requireNonNull(transitionService, "transitionService es obligatorio");
+        this.eventPublisher    = Objects.requireNonNull(eventPublisher,    "eventPublisher es obligatorio");
     }
 
     public State execute(
@@ -25,7 +25,11 @@ public final class StateTransitionExecutor {
             State nextState,
             String reason,
             String triggeredBy
-    ){
+    ) {
+        Objects.requireNonNull(aggregateId,  "aggregateId es obligatorio");
+        Objects.requireNonNull(currentState, "currentState es obligatorio");
+        Objects.requireNonNull(nextState,    "nextState es obligatorio");
+
         transitionService.validate(currentState, nextState);
 
         StateTransitionOccurredEvent event = new StateTransitionOccurredEvent(
@@ -36,8 +40,9 @@ public final class StateTransitionExecutor {
                 triggeredBy,
                 Instant.now()
         );
+
         eventPublisher.publish(event);
+
         return nextState;
     }
-
 }
