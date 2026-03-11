@@ -15,30 +15,83 @@
 
     <properties>
         <java.version>21</java.version>
-        <spring.boot.version>4.0.1</spring.boot.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-boot.version>3.4.3</spring-boot.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
+        <lombok.version>1.18.36</lombok.version>
     </properties>
 
     <modules>
         <module>sicap-domain</module>
-    <!--
-    <module>sicap-application</module>
-    <module>sicap-infrastructure-h2</module>
-    <module>sicap-adapters-rest</module>
-    <module>sicap-bootstrap</module>
-    <module>sicap-tests</module>
-    -->
-</modules>
+        <!--
+        <module>sicap-application</module>
+        <module>sicap-infrastructure-h2</module>
+        <module>sicap-adapters-rest</module>
+        <module>sicap-bootstrap</module>
+        <module>sicap-tests</module>
+        -->
+    </modules>
 
     <dependencyManagement>
         <dependencies>
+            <!-- Spring Boot BOM -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot.version}</version>
+                <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!-- Módulos internos -->
+            <dependency>
+                <groupId>com.b2bsolutions</groupId>
+                <artifactId>sicap-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.b2bsolutions</groupId>
+                <artifactId>sicap-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- MapStruct -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.13.0</version>
+                    <configuration>
+                        <source>21</source>
+                        <target>21</target>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>${mapstruct.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>
