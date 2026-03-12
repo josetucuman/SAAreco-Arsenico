@@ -1,4 +1,4 @@
-package com.b2bSolutions.application.ports.in.command;
+package com.b2bsolutions.application.ports.in.command;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
