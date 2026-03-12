@@ -1,6 +1,6 @@
-package com.b2bSolutions.application.services;
+package com.b2bsolutions.application.service;
 
-import com.b2bSolutions.application.ports.in.RegistrarFuenteAguaUseCase;
+import com.b2bsolutions.application.ports.in.RegistrarFuenteAguaUseCase;
 import com.b2bSolutions.application.ports.out.FuenteAguaRepository;
 import com.b2bsolutions.application.ports.in.command.RegistrarFuenteAguaCommand;
 import com.b2bsolutions.domain.font.FuenteAgua;

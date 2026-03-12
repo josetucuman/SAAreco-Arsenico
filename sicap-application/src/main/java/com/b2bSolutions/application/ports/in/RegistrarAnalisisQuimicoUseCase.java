@@ -1,4 +1,4 @@
-package com.b2bSolutions.application.ports.in;
+package com.b2bsolutions.application.ports.in;
 
 import com.b2bsolutions.application.ports.in.command.RegistrarAnalisisQuimicoCommand;
 
