@@ -1,4 +1,4 @@
-package com.b2bsolutions.application.services;
+package com.b2bSolutions.application.services;
 
 public class RegistrarAnalisisQuimicoService {
 }

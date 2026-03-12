@@ -1,4 +1,4 @@
-package com.b2bsolutions.application.response;
+package com.b2bSolutions.application.response;
 
 import com.b2bsolutions.domain.alert.Severity;
 

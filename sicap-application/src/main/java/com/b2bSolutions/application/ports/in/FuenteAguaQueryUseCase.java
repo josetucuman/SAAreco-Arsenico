@@ -1,7 +1,8 @@
-package com.b2bsolutions.application.ports.in;
+package com.b2bSolutions.application.ports.in;
 
 import java.util.UUID;
 import java.util.List;
+import com.b2bsolutions.application.response.FuenteAguaResponse;
 
 /**
  * Puerto de entrada para consultas de FuenteAgua.

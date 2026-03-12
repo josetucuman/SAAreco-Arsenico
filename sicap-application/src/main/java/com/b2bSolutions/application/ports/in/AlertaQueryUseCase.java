@@ -1,6 +1,8 @@
-package com.b2bsolutions.application.ports.in;
+package com.b2bSolutions.application.ports.in;
 
 
+import java.util.List;
+import com.b2bsolutions.application.response.AlertaResponse;
 /**
  * Puerto de entrada para consultas de Alertas.
  * Solo lectura — no modifica estado del dominio.

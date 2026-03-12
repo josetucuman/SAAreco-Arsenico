@@ -1,6 +1,7 @@
 package com.b2bsolutions.application.ports.in;
 
 
+import com.b2bSolutions.application.response.EvaluacionResultado;
 import com.b2bsolutions.application.ports.in.command.EvaluarMuestraAguaCommand;
 
 /**

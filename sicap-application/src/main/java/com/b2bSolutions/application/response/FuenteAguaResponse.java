@@ -1,4 +1,4 @@
-package com.b2bsolutions.application.response;
+package com.b2bSolutions.application.response;
 
 import com.b2bsolutions.domain.font.enums.EstadoSanitario;
 import com.b2bsolutions.domain.font.enums.TipoFuente;
