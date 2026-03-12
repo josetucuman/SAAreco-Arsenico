@@ -3,7 +3,7 @@ package com.b2bsolutions.domain.model;
 import com.b2bsolutions.domain.exception.ReglaNegocioException;
 import com.b2bsolutions.domain.state.State;
 import com.b2bsolutions.domain.transitions.StateTransitionService;
-import com.b2bsolutions.domain.transitions.event.DomainEvent;
+import com.b2bsolutions.domain.transitions.events.DomainEvent;
 
 import java.time.Instant;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.b2bsolutions.domain.transitions.event;
+package com.b2bsolutions.domain.transitions.events;
 
 import com.b2bsolutions.domain.state.State;
 

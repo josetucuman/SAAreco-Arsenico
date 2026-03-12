@@ -1,7 +1,7 @@
 package com.b2bsolutions.domain.transitions;
 
 import com.b2bsolutions.domain.state.State;
-import com.b2bsolutions.domain.transitions.event.StateTransitionOccurredEvent;
+import com.b2bsolutions.domain.transitions.events.StateTransitionOccurredEvent;
 import com.b2bsolutions.domain.transitions.events.DomainEventPublisher;
 
 import java.time.Instant;

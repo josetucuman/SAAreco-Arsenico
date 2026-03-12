@@ -1,8 +1,5 @@
 package com.b2bsolutions.domain.transitions.events;
 
-import com.b2bsolutions.domain.transitions.event.DomainEvent;
-import com.b2bsolutions.domain.transitions.event.StateTransitionOccurredEvent;
-
 import java.util.List;
 
 /**

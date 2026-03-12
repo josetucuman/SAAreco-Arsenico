@@ -3,8 +3,8 @@ package com.b2bsolutions.domain.font;
 import com.b2bsolutions.domain.exception.ReglaNegocioException;
 import com.b2bsolutions.domain.font.enums.EstadoSanitario;
 import com.b2bsolutions.domain.font.enums.TipoFuente;
-import com.b2bsolutions.domain.transitions.event.DomainEvent;
-import com.b2bsolutions.domain.transitions.event.EstadoSanitarioFuenteActualizadoEvent;
+import com.b2bsolutions.domain.transitions.events.DomainEvent;
+import com.b2bsolutions.domain.transitions.events.EstadoSanitarioFuenteActualizadoEvent;
 
 import java.time.Instant;
 import java.util.*;

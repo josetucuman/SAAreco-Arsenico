@@ -1,7 +1,5 @@
 package com.b2bsolutions.domain.transitions.events;
 
-import com.b2bsolutions.domain.transitions.event.DomainEvent;
-
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;

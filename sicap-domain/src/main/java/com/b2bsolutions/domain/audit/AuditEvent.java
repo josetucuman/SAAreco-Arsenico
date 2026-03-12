@@ -1,5 +1,7 @@
 package com.b2bsolutions.domain.audit;
 
+import com.b2bsolutions.domain.audit.enums.AuditAction;
+
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
@@ -11,7 +13,7 @@ import java.util.UUID;
 public record AuditEvent(
         UUID id,
         UUID aggregateId,       // entidad afectada
-        com.b2bsolutions.domain.audit.AuditAction action,     // ← enum tipado, no String libre
+        AuditAction action,     // ← enum tipado, no String libre
         String performedBy,     // operador o "SYSTEM"
         Instant performedAt,
         String details          // nullable — contexto adicional
@@ -30,7 +32,7 @@ public record AuditEvent(
 
     // ── Factory method ───────────────────────────────────────────────────────
 
-    public static AuditEvent of(UUID aggregateId, com.b2bsolutions.domain.audit.AuditAction action,
+    public static AuditEvent of(UUID aggregateId, AuditAction action,
                                 String performedBy, String details) {
         return new AuditEvent(
                 UUID.randomUUID(),
