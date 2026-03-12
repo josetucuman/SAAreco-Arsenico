@@ -10,6 +10,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+<<<<<<< HEAD
     <modules>
         <module>sicap-domain</module>
         <!--
@@ -34,6 +35,36 @@
     <dependencyManagement>
         <dependencies>
             <!-- Spring Boot BOM — gestiona todas las versiones de Spring -->
+=======
+    <name>SICAP</name>
+    <description>Sistema Integral de Control Ambiental de Planta</description>
+
+    <properties>
+        <java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-boot.version>3.4.3</spring-boot.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
+        <lombok.version>1.18.36</lombok.version>
+    </properties>
+
+    <modules>
+        <module>sicap-domain</module>
+
+        <module>sicap-application</module>
+        <!--
+      <module>sicap-infrastructure-h2</module>
+      <module>sicap-adapters-rest</module>
+      <module>sicap-bootstrap</module>
+      <module>sicap-tests</module>
+      -->
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Boot BOM -->
+>>>>>>> b36d486976ff02c56e0a1e16c683981c6a998a3b
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -45,17 +76,25 @@
             <!-- Módulos internos -->
             <dependency>
                 <groupId>com.b2bsolutions</groupId>
+<<<<<<< HEAD
                 <artifactId>domain</artifactId>
+=======
+                <artifactId>sicap-domain</artifactId>
+>>>>>>> b36d486976ff02c56e0a1e16c683981c6a998a3b
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.b2bsolutions</groupId>
+<<<<<<< HEAD
                 <artifactId>application</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.b2bsolutions</groupId>
                 <artifactId>infrastructure</artifactId>
+=======
+                <artifactId>sicap-application</artifactId>
+>>>>>>> b36d486976ff02c56e0a1e16c683981c6a998a3b
                 <version>${project.version}</version>
             </dependency>
 
@@ -78,7 +117,10 @@
                     <configuration>
                         <source>21</source>
                         <target>21</target>
+<<<<<<< HEAD
                         <!-- Orden crítico: Lombok ANTES de MapStruct -->
+=======
+>>>>>>> b36d486976ff02c56e0a1e16c683981c6a998a3b
                         <annotationProcessorPaths>
                             <path>
                                 <groupId>org.projectlombok</groupId>
@@ -93,6 +135,7 @@
                         </annotationProcessorPaths>
                     </configuration>
                 </plugin>
+<<<<<<< HEAD
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
@@ -101,4 +144,10 @@
             </plugins>
         </pluginManagement>
     </build>
+=======
+            </plugins>
+        </pluginManagement>
+    </build>
+
+>>>>>>> b36d486976ff02c56e0a1e16c683981c6a998a3b
 </project>

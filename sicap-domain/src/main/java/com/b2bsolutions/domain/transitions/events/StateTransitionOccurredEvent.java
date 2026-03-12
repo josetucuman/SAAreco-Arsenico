@@ -10,11 +10,8 @@ import java.util.UUID;
  * Evento de dominio que se publica cada vez que un Aggregate Root
  * realiza una transición de estado exitosa.
  *
- * Es un evento genérico y transversal — sirve para cualquier entidad
- * del dominio que use la máquina de estados (MuestraAgua, FuenteAgua, PlantState, etc.)
- *
- * Ciclo: StateTransitionExecutor lo crea → DomainEventPublisher lo distribuye
- *        → AuditService lo persiste → Dashboard lo refleja en tiempo real
+ * Es genérico y transversal — sirve para cualquier entidad
+ * que use la máquina de estados (MuestraAgua, FuenteAgua, PlantState)
  */
 public record StateTransitionOccurredEvent(
         UUID aggregateId,
@@ -38,13 +35,15 @@ public record StateTransitionOccurredEvent(
                     "fromState y toState no pueden ser iguales: " + fromState
             );
         }
-
-        // reason y triggeredBy son opcionales pero no blancos si se informan
         if (reason != null && reason.isBlank()) {
-            throw new IllegalArgumentException("reason no puede ser blank si se provee");
+            throw new IllegalArgumentException(
+                    "reason no puede ser blank si se provee"
+            );
         }
         if (triggeredBy != null && triggeredBy.isBlank()) {
-            throw new IllegalArgumentException("triggeredBy no puede ser blank si se provee");
+            throw new IllegalArgumentException(
+                    "triggeredBy no puede ser blank si se provee"
+            );
         }
     }
 
@@ -57,15 +56,17 @@ public record StateTransitionOccurredEvent(
 
     // ── Queries de negocio ───────────────────────────────────────────────────
 
-    /** Describe la transición en formato legible para logs y auditoría */
     public String describir() {
         return "[" + aggregateId + "] " + fromState + " → " + toState
-                + (reason != null ? " | Razón: " + reason : "")
-                + (triggeredBy != null ? " | Por: " + triggeredBy : "");
+                + (reason      != null ? " | Razón: " + reason      : "")
+                + (triggeredBy != null ? " | Por: "   + triggeredBy : "");
     }
 
-    /** ¿Fue disparado por el sistema automáticamente? */
     public boolean fueAutomatico() {
         return "SYSTEM".equalsIgnoreCase(triggeredBy);
+    }
+
+    public boolean esTransicionDeEmergencia() {
+        return toState == State.NO_APTA;
     }
 }

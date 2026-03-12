@@ -32,7 +32,12 @@ public record AuditEvent(
 
     // ── Factory method ───────────────────────────────────────────────────────
 
+<<<<<<< HEAD
     public static AuditEvent of(UUID aggregateId, AuditAction action,
+=======
+
+    public static AuditEvent of(UUID aggregateId,  AuditAction  action,
+>>>>>>> b36d486976ff02c56e0a1e16c683981c6a998a3b
                                 String performedBy, String details) {
         return new AuditEvent(
                 UUID.randomUUID(),

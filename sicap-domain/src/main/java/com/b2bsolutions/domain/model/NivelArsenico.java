@@ -14,27 +14,24 @@ import java.util.Objects;
  *   ≤ 50   → ELEVADO     (requiere seguimiento)
  *   > 50   → CRITICO     (riesgo para la salud, acción inmediata)
  */
-public class NivelArsenico {
+public final class NivelArsenico {
 
     // Límites según OMS y normativa argentina (SENASA / CAA Artículo 982)
-    public static final ConcentracionPPB LIMITE_OMS          = ConcentracionPPB.deMicrogramosPorLitro(10.0);
-    public static final ConcentracionPPB LIMITE_ELEVADO      = ConcentracionPPB.deMicrogramosPorLitro(50.0);
-    public static final ConcentracionPPB LIMITE_CRITICO      = ConcentracionPPB.deMicrogramosPorLitro(50.0);
+    public static final ConcentracionPPB LIMITE_OMS     = ConcentracionPPB.deMicrogramosPorLitro(10.0);
+    public static final ConcentracionPPB LIMITE_ELEVADO = ConcentracionPPB.deMicrogramosPorLitro(50.0);
 
     private final ConcentracionPPB concentracion;
-    private Clasificacion clasificacion = null;
+    private final Clasificacion clasificacion;
 
+    // ── Constructor privado ───────────────────────────────────────────────────
 
-    public NivelArsenico(ConcentracionPPB concentracion) {
+    private NivelArsenico(ConcentracionPPB concentracion) {
         Objects.requireNonNull(concentracion, "La concentración no puede ser nula");
         this.concentracion = concentracion;
-        this.clasificacion = clasificacion;
+        this.clasificacion = clasificar(concentracion);
     }
 
-
-
-
-    // ── Factory methods ──────────────────────────────────────────────────────
+    // ── Factory methods ───────────────────────────────────────────────────────
 
     public static NivelArsenico de(ConcentracionPPB concentracion) {
         return new NivelArsenico(concentracion);
@@ -44,19 +41,20 @@ public class NivelArsenico {
         return new NivelArsenico(ConcentracionPPB.deMicrogramosPorLitro(ugL));
     }
 
-    /** Compatibilidad con tu AnalisisQuimico actual que usa mg/L */
+    /** Compatibilidad con AnalisisQuimico que puede recibir mg/L */
     public static NivelArsenico deMiligramosPorLitro(double mgL) {
         return new NivelArsenico(ConcentracionPPB.deMiligramosPorLitro(mgL));
     }
 
-    // ── Lógica de negocio ────────────────────────────────────────────────────
+    // ── Lógica de negocio ─────────────────────────────────────────────────────
 
     public boolean esAceptable() {
         return clasificacion == Clasificacion.ACEPTABLE;
     }
 
     public boolean requiereAtencion() {
-        return clasificacion == Clasificacion.ELEVADO || clasificacion == Clasificacion.CRITICO;
+        return clasificacion == Clasificacion.ELEVADO
+                || clasificacion == Clasificacion.CRITICO;
     }
 
     public boolean esCritico() {
@@ -69,15 +67,15 @@ public class NivelArsenico {
 
     /**
      * Calcula el porcentaje de reducción necesario para alcanzar el límite OMS.
+     * Retorna 0.0 si ya está dentro del límite.
      * Útil para dimensionar el proceso de filtrado.
      */
     public double porcentajeReduccionNecesario() {
         if (!superaLimiteOMS()) return 0.0;
-        double actual = concentracion.enMicrogramosPorLitro();
+        double actual   = concentracion.enMicrogramosPorLitro();
         double objetivo = LIMITE_OMS.enMicrogramosPorLitro();
         return ((actual - objetivo) / actual) * 100.0;
     }
-
 
     /**
      * Verifica si luego del filtrado el resultado es aceptable.
@@ -87,48 +85,36 @@ public class NivelArsenico {
         return nivelPostFiltrado.esAceptable();
     }
 
-    // ── Accesores ────────────────────────────────────────────────────────────
-
-    public ConcentracionPPB getConcentracion() {
-        return concentracion;
-    }
-
-    public Clasificacion getClasificacion() {
-        return clasificacion;
-    }
-
-    // ── Clasificación interna ────────────────────────────────────────────────
+    // ── Clasificación interna ─────────────────────────────────────────────────
 
     private static Clasificacion clasificar(ConcentracionPPB c) {
-        if (c.esMenorOIgualQue(LIMITE_OMS)) {
-            return Clasificacion.ACEPTABLE;
-        } else if (c.esMenorOIgualQue(LIMITE_ELEVADO)) {
-            return Clasificacion.ELEVADO;
-        } else {
-            return Clasificacion.CRITICO;
-        }
+        if (c.esMenorOIgualQue(LIMITE_OMS))     return Clasificacion.ACEPTABLE;
+        if (c.esMenorOIgualQue(LIMITE_ELEVADO)) return Clasificacion.ELEVADO;
+        return Clasificacion.CRITICO;
     }
 
-    // ── Value Object contract ────────────────────────────────────────────────
+    // ── Accesores ─────────────────────────────────────────────────────────────
 
+    public ConcentracionPPB getConcentracion() { return concentracion; }
+    public Clasificacion getClasificacion()     { return clasificacion; }
+
+    // ── Value Object contract ─────────────────────────────────────────────────
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        NivelArsenico that = (NivelArsenico) o;
-        return Objects.equals(concentracion, that.concentracion) && clasificacion == that.clasificacion;
+        if (this == o) return true;
+        if (!(o instanceof NivelArsenico that)) return false;
+        return Objects.equals(this.concentracion, that.concentracion);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(concentracion, clasificacion);
+        return Objects.hash(concentracion);
     }
 
     @Override
     public String toString() {
-        return "NivelArsenico{" +
-                "concentracion=" + concentracion +
-                ", clasificacion=" + clasificacion +
-                '}';
+        return "NivelArsenico{concentracion=" + concentracion
+                + ", clasificacion=" + clasificacion + "}";
     }
 }

@@ -4,6 +4,11 @@ import com.b2bsolutions.domain.exception.ReglaNegocioException;
 import com.b2bsolutions.domain.state.State;
 import com.b2bsolutions.domain.transitions.StateTransitionService;
 import com.b2bsolutions.domain.transitions.events.DomainEvent;
+<<<<<<< HEAD
+=======
+import com.b2bsolutions.domain.transitions.events.MuestraEnAnalisisEvent;
+import com.b2bsolutions.domain.transitions.events.MuestraEvaluadaEvent;
+>>>>>>> b36d486976ff02c56e0a1e16c683981c6a998a3b
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -12,43 +17,30 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- * Aggregate Root del proceso de muestreo de agua.
- *
- * Ciclo de vida:
- *   TOMADA → EN_ANALISIS → APTA | NO_APTA
- *
- * Invariantes:
- *   - Una muestra solo puede analizarse desde TOMADA
- *   - Una muestra solo puede evaluarse desde EN_ANALISIS
- *   - El análisis químico completo es requerido para avanzar
- *   - El nivel de arsénico no puede ser negativo
- */
 public final class MuestraAgua {
 
     private final UUID id;
-    private final UUID fuenteAguaId;        // referencia al Aggregate Root FuenteAgua
+    private final UUID fuenteAguaId;
     private final String puntoOrigen;
     private final Instant fechaToma;
 
     private State estado;
-    private AnalisisQuimico analisisQuimico; // Value Object completo, no double suelto
+    private AnalisisQuimico analisisQuimico;
     private Instant fechaEvaluacion;
 
-    // Eventos generados — los recoge el servicio de aplicación para publicar
     private final List<DomainEvent> eventos = new ArrayList<>();
 
     // ── Constructor ──────────────────────────────────────────────────────────
 
     public MuestraAgua(UUID id, UUID fuenteAguaId, String puntoOrigen, Instant fechaToma) {
-        this.id           = Objects.requireNonNull(id, "El ID es obligatorio");
+        this.id           = Objects.requireNonNull(id,           "El ID es obligatorio");
         this.fuenteAguaId = Objects.requireNonNull(fuenteAguaId, "La fuente de agua es obligatoria");
         this.puntoOrigen  = validarPuntoOrigen(puntoOrigen);
-        this.fechaToma    = Objects.requireNonNull(fechaToma, "La fecha de toma es obligatoria");
-        this.estado       = State.TOMADA; // ← estado inicial explícito
+        this.fechaToma    = Objects.requireNonNull(fechaToma,    "La fecha de toma es obligatoria");
+        this.estado       = State.TOMADA;
     }
 
-    // ── Factory method (alternativa semántica) ───────────────────────────────
+    // ── Factory method ───────────────────────────────────────────────────────
 
     public static MuestraAgua tomar(UUID fuenteAguaId, String puntoOrigen) {
         return new MuestraAgua(UUID.randomUUID(), fuenteAguaId, puntoOrigen, Instant.now());
@@ -56,37 +48,22 @@ public final class MuestraAgua {
 
     // ── Comportamiento de dominio ────────────────────────────────────────────
 
-    /**
-     * Registra el análisis químico completo de la muestra.
-     * Transiciona TOMADA → EN_ANALISIS.
-     *
-     * @param analisis    análisis fisicoquímico completo (arsénico + parámetros)
-     * @param transitions servicio de validación de transiciones
-     */
     public void registrarAnalisis(AnalisisQuimico analisis,
                                   StateTransitionService transitions) {
-
-        Objects.requireNonNull(analisis, "El análisis químico es obligatorio");
-        Objects.requireNonNull(transitions, "El servicio de transiciones es obligatorio");
+        Objects.requireNonNull(analisis,     "El análisis químico es obligatorio");
+        Objects.requireNonNull(transitions,  "El servicio de transiciones es obligatorio");
 
         validarEstado(State.TOMADA, "registrar análisis");
-
         transitions.validate(State.TOMADA, State.EN_ANALISIS);
 
         this.analisisQuimico = analisis;
         this.estado          = State.EN_ANALISIS;
 
-        eventos.add(new com.b2bsolutions.domain.transitions.events.MuestraEnAnalisisEvent(this.id, this.fuenteAguaId, Instant.now()));
+        eventos.add(new MuestraEnAnalisisEvent(this.id, this.fuenteAguaId, Instant.now()));
+
     }
 
-    /**
-     * Evalúa la muestra comparando contra el límite OMS.
-     * Transiciona EN_ANALISIS → APTA | NO_APTA.
-     *
-     * El límite no se recibe como parámetro: está encapsulado en NivelArsenico.
-     */
     public void evaluar(StateTransitionService transitions) {
-
         Objects.requireNonNull(transitions, "El servicio de transiciones es obligatorio");
 
         validarEstado(State.EN_ANALISIS, "evaluar");
@@ -98,29 +75,23 @@ public final class MuestraAgua {
         }
 
         State destino = determinarEstadoFinal();
-
         transitions.validate(State.EN_ANALISIS, destino);
 
         this.estado          = destino;
         this.fechaEvaluacion = Instant.now();
 
-        eventos.add(new com.b2bsolutions.domain.transitions.events.MuestraEvaluadaEvent(this.id, this.fuenteAguaId, destino, Instant.now()));
+        eventos.add(new MuestraEvaluadaEvent(this.id, this.fuenteAguaId, destino, Instant.now()));
     }
 
-    /**
-     * Lógica de decisión centralizada.
-     * Considera arsénico Y parámetros fisicoquímicos.
-     */
+    // ── Lógica de decisión ───────────────────────────────────────────────────
+
     private State determinarEstadoFinal() {
         NivelArsenico nivel = analisisQuimico.getNivelArsenico();
 
-        // Si el arsénico es crítico → NO_APTA de inmediato
-        if (nivel.esCritico()) {
-            return State.NO_APTA;
-        }
+        if (nivel.esCritico()) return State.NO_APTA;
 
-        // Si supera límite OMS o parámetros fuera de rango → NO_APTA
-        if (nivel.superaLimiteOMS() || !analisisQuimico.getParametros().todosLosParametrosSonAceptables()) {
+        if (nivel.superaLimiteOMS()
+                || !analisisQuimico.getParametros().todosLosParametrosSonAceptables()) {
             return State.NO_APTA;
         }
 
@@ -142,19 +113,15 @@ public final class MuestraAgua {
         return estado == State.APTA || estado == State.NO_APTA;
     }
 
-    // ── Manejo de eventos ────────────────────────────────────────────────────
+    // ── Eventos ──────────────────────────────────────────────────────────────
 
-    /**
-     * El servicio de aplicación llama esto para obtener y limpiar los eventos pendientes.
-     * Patrón: collect-and-clear
-     */
     public List<DomainEvent> pullEventos() {
         List<DomainEvent> copia = Collections.unmodifiableList(new ArrayList<>(eventos));
         eventos.clear();
         return copia;
     }
 
-    // ── Validaciones internas ────────────────────────────────────────────────
+    // ── Validaciones ─────────────────────────────────────────────────────────
 
     private void validarEstado(State estadoEsperado, String operacion) {
         if (this.estado != estadoEsperado) {
@@ -174,11 +141,11 @@ public final class MuestraAgua {
 
     // ── Getters ──────────────────────────────────────────────────────────────
 
-    public UUID getId()                        { return id; }
-    public UUID getFuenteAguaId()              { return fuenteAguaId; }
-    public String getPuntoOrigen()             { return puntoOrigen; }
-    public Instant getFechaToma()              { return fechaToma; }
-    public State getEstado()                   { return estado; }
-    public AnalisisQuimico getAnalisisQuimico(){ return analisisQuimico; }
-    public Instant getFechaEvaluacion()        { return fechaEvaluacion; }
+    public UUID getId()                         { return id; }
+    public UUID getFuenteAguaId()               { return fuenteAguaId; }
+    public String getPuntoOrigen()              { return puntoOrigen; }
+    public Instant getFechaToma()               { return fechaToma; }
+    public State getEstado()                    { return estado; }
+    public AnalisisQuimico getAnalisisQuimico() { return analisisQuimico; }
+    public Instant getFechaEvaluacion()         { return fechaEvaluacion; }
 }

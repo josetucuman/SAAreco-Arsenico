@@ -3,6 +3,7 @@ package com.b2bsolutions.domain.model;
 import java.time.Instant;
 import java.util.Objects;
 
+
 public final class AnalisisQuimico {
     private final NivelArsenico nivelArsenico;       // reemplaza arsenicoMgL
     private final ParametrosCalidad parametros;       // reemplaza ph, turbidez, temp

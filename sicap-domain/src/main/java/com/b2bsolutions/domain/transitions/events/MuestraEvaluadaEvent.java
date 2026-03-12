@@ -1,6 +1,10 @@
 package com.b2bsolutions.domain.transitions.events;
 
 import com.b2bsolutions.domain.state.State;
+<<<<<<< HEAD
+=======
+
+>>>>>>> b36d486976ff02c56e0a1e16c683981c6a998a3b
 
 import java.time.Instant;
 import java.util.Objects;
@@ -53,5 +57,11 @@ public record MuestraEvaluadaEvent(
     }
 
 
+<<<<<<< HEAD
 
+=======
+    public Instant occurredOn() {
+        return null;
+    }
+>>>>>>> b36d486976ff02c56e0a1e16c683981c6a998a3b
 }

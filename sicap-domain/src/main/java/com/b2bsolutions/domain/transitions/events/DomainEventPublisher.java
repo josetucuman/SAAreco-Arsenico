@@ -5,9 +5,10 @@ import java.util.List;
 /**
  * Puerto de salida (driven port) para publicación de eventos de dominio.
  *
- * La implementación vive en infraestructura — el dominio solo conoce esta interface.
- * Permite desacoplar completamente la publicación del mecanismo real
- * (memoria, message broker, base de datos, etc.)
+ * Reglas:
+ *   - La implementación vive en infraestructura — el dominio solo conoce esta interface
+ *   - Nunca inyectar dependencias de Spring, Kafka o cualquier framework aquí
+ *   - El dominio genera eventos, la infraestructura los publica
  */
 public interface DomainEventPublisher {
 

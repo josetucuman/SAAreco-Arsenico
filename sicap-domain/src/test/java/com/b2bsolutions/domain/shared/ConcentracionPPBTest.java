@@ -3,7 +3,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+<<<<<<< HEAD
 
+=======
+import com.b2bsolutions.domain.exception.DomainViolationException;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
+>>>>>>> b36d486976ff02c56e0a1e16c683981c6a998a3b
 
 @DisplayName("ConcentracionPPB")
 class ConcentracionPPBTest {
