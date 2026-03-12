@@ -56,7 +56,8 @@ public final class MuestraAgua {
         this.analisisQuimico = analisis;
         this.estado          = State.EN_ANALISIS;
 
-        eventos.add(new MuestraEnAnalisisEvent(this.id, this.fuenteAguaId, destino, Instant.now()));
+        eventos.add(new MuestraEnAnalisisEvent(this.id, this.fuenteAguaId, Instant.now()));
+
     }
 
     public void evaluar(StateTransitionService transitions) {

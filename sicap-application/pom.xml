@@ -8,14 +8,27 @@
     <parent>
         <groupId>com.b2bsolutions</groupId>
         <artifactId>sicap</artifactId>
-        <version>1.0.0-SNAPSHOT</version>   <!-- ← coincide con el parent -->
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>sicap-domain</artifactId>
-    <name>SICAP — Domain</name>
+    <artifactId>sicap-application</artifactId>
+    <name>SICAP — Application</name>
 
     <dependencies>
+        <!-- Solo conoce el dominio -->
+        <dependency>
+            <groupId>com.b2bsolutions</groupId>
+            <artifactId>sicap-domain</artifactId>
+        </dependency>
+
+        <!-- Validación de commands -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+
+        <!-- Testing -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -32,6 +45,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -41,4 +55,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
