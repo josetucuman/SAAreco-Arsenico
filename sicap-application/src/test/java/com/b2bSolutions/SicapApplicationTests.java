@@ -1,4 +1,4 @@
-package com.b2bSolutions.application;
+package com.b2bSolutions;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
