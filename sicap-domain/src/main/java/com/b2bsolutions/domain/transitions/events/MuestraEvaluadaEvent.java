@@ -1,7 +1,7 @@
 package com.b2bsolutions.domain.transitions.events;
 
 import com.b2bsolutions.domain.state.State;
-import com.b2bsolutions.domain.transitions.event.DomainEvent;
+
 
 import java.time.Instant;
 import java.util.Objects;
@@ -53,7 +53,7 @@ public record MuestraEvaluadaEvent(
         return estadoFinal == State.NO_APTA;
     }
 
-    @Override
+
     public Instant occurredOn() {
         return null;
     }

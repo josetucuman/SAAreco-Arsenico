@@ -1,13 +1,13 @@
-package com.b2bsolutions.core;
+package com.b2bSolutions.application;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SaArecoArsenicoApplicationTests {
+class SicapApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+	@Test
+	void contextLoads() {
+	}
 
 }

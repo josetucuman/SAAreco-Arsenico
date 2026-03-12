@@ -1,8 +1,9 @@
 package com.b2bsolutions.domain.transitions;
 
 import com.b2bsolutions.domain.state.State;
-import com.b2bsolutions.domain.transitions.event.StateTransitionOccurredEvent;
+import com.b2bsolutions.domain.transitions.events.DomainEvent;
 import com.b2bsolutions.domain.transitions.events.DomainEventPublisher;
+import com.b2bsolutions.domain.transitions.events.StateTransitionOccurredEvent;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -32,7 +33,7 @@ public final class StateTransitionExecutor {
 
         transitionService.validate(currentState, nextState);
 
-        StateTransitionOccurredEvent event = new StateTransitionOccurredEvent(
+        DomainEvent event = new StateTransitionOccurredEvent(
                 aggregateId,
                 currentState,
                 nextState,
@@ -40,6 +41,7 @@ public final class StateTransitionExecutor {
                 triggeredBy,
                 Instant.now()
         );
+
 
         eventPublisher.publish(event);
 
