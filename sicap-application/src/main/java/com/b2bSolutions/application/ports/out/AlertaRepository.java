@@ -1,4 +1,5 @@
-package com.b2bSolutions.application.ports.out;
+package com.b2bsolutions.application.ports.out;
+
 import com.b2bsolutions.domain.alert.Alert;
 
 import java.util.List;

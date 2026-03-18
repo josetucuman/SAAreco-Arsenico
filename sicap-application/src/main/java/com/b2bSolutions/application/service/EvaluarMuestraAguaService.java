@@ -3,8 +3,8 @@ package com.b2bsolutions.application.service;
 import com.b2bsolutions.application.ports.in.EvaluarMuestraAguaUseCase;
 import com.b2bsolutions.application.ports.in.command.EvaluarMuestraAguaCommand;
 import com.b2bsolutions.application.response.EvaluacionResultado;
-import com.b2bSolutions.application.ports.out.MuestraAguaRepository;
-import com.b2bSolutions.application.ports.out.FuenteAguaRepository;
+import com.b2bsolutions.application.ports.out.MuestraAguaRepository;
+import com.b2bsolutions.application.ports.out.FuenteAguaRepository;
 import com.b2bsolutions.domain.alert.Alert;
 import com.b2bsolutions.domain.exception.ReglaNegocioException;
 import com.b2bsolutions.domain.font.FuenteAgua;
@@ -12,7 +12,7 @@ import com.b2bsolutions.domain.model.MuestraAgua;
 import com.b2bsolutions.domain.state.State;
 import com.b2bsolutions.domain.transitions.StateTransitionService;
 import com.b2bsolutions.domain.transitions.events.DomainEventPublisher;
-import com.b2bSolutions.application.ports.out.AlertaRepository;
+import com.b2bsolutions.application.ports.out.AlertaRepository;
 
 public class EvaluarMuestraAguaService implements EvaluarMuestraAguaUseCase {
 
