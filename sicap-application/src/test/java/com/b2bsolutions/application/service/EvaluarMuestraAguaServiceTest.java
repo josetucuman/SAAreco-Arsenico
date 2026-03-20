@@ -6,6 +6,7 @@ import com.b2bsolutions.application.ports.out.FuenteAguaRepository;
 import com.b2bsolutions.application.ports.out.MuestraAguaRepository;
 import com.b2bsolutions.application.response.EvaluacionResultado;
 import com.b2bsolutions.domain.alert.Alert;
+import com.b2bsolutions.domain.exception.ReglaNegocioException;
 import com.b2bsolutions.domain.font.FuenteAgua;
 import com.b2bsolutions.domain.font.Ubicacion;
 import com.b2bsolutions.domain.font.enums.TipoFuente;
@@ -31,8 +32,6 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-
-import com.b2bsolutions.application.service.
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("EvaluarMuestraAguaService")
@@ -134,7 +133,7 @@ class EvaluarMuestraAguaServiceTest {
             // When / Then
             assertThatThrownBy(() -> service.execute(
                     new EvaluarMuestraAguaCommand(muestraId, "operador1")
-            )).isInstanceOf(Exception.class);
+            )).isInstanceOf(ReglaNegocioException.class);
         }
     }
 
