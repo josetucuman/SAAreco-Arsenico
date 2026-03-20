@@ -25,10 +25,9 @@
 
     <modules>
         <module>sicap-domain</module>
-
         <module>sicap-application</module>
+        <module>sicap-infrastructure-h2</module>
         <!--
-      <module>sicap-infrastructure-h2</module>
       <module>sicap-adapters-rest</module>
       <module>sicap-bootstrap</module>
       <module>sicap-tests</module>
