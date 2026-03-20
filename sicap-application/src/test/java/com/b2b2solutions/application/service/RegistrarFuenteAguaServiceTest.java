@@ -1,7 +1,8 @@
-package com.b2bsolutions.application.service;
+package com.b2b2solutions.application.service;
 
 import com.b2bsolutions.application.ports.in.command.RegistrarFuenteAguaCommand;
 import com.b2bsolutions.application.ports.out.FuenteAguaRepository;
+import com.b2bsolutions.application.service.RegistrarFuenteAguaService;
 import com.b2bsolutions.domain.font.FuenteAgua;
 import com.b2bsolutions.domain.font.enums.EstadoSanitario;
 import com.b2bsolutions.domain.transitions.events.DomainEventPublisher;

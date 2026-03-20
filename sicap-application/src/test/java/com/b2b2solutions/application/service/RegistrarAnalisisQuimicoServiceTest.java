@@ -1,4 +1,4 @@
-package com.b2b2solutions.applications.service;
+package com.b2b2solutions.application.service;
 
 import com.b2bsolutions.application.ports.in.command.RegistrarAnalisisQuimicoCommand;
 import com.b2bsolutions.application.ports.out.FuenteAguaRepository;
