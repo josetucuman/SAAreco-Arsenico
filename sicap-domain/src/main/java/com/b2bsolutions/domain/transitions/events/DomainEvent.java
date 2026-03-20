@@ -3,7 +3,7 @@ package com.b2bsolutions.domain.transitions.events;
 import java.time.Instant;
 
 /**
- * Contrato base para todos los eventos de dominio.
+ * Contrato base para todos los  de dominio.
  *
  * Reglas:
  *   - Esta interface no conoce infraestructura
